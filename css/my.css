@@ -1,0 +1,277 @@
+/*
+* @Author: xuebingsi
+* @Date:   2019-04-01 13:37:17
+* @Last Modified by:   zhibinm
+* @Last Modified time: 2019-04-01 13:37:19
+*/
+/*自定义公用样式*/
+.valign {
+    vertical-align: center
+}
+
+.sp1 {
+    padding: 0 3px;
+}
+
+#updatatime{
+    font-size: 15px;
+    color: #0a84ff;
+    text-align: center;
+}
+
+.toptitle{font-size:20px;font-weight: bold;display: block;
+    color: #fff;width:400px;line-height: 40px;text-align: center;
+    display: block;margin: 20px auto 0 auto;border-radius: 12px;
+    background: #0a84ff;border-bottom-left-radius: 0;border-bottom-right-radius: 0;
+}
+
+
+
+
+
+
+/*分页样式*/
+.page-bar {
+    margin: 20px auto;
+    margin-top: 10px;
+    clear: both;
+    text-align: center;
+
+}
+
+.loadingcss1 {
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 50px;
+}
+
+.page-bar ul {
+    width: auto;
+    margin: auto;
+    display: block;
+    padding-right: 30px;
+}
+
+.page-bar li {
+    list-style: none;
+    display: inline-block;
+
+}
+
+.page-bar li:first-child > a {
+    margin-left: 0px
+}
+
+.page-bar a {
+    border: 1px solid #ddd;
+    text-decoration: none;
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #5D6062;
+    cursor: pointer;
+    margin-right: 20px;
+    background: #fffFFF;
+}
+
+.page-bar a:hover {
+    background-color: #eee;
+}
+
+.page-bar a.banclick {
+    cursor: not-allowed;
+}
+
+.page-bar .active a {
+    color: #fff;
+    cursor: default;
+    background-color: #1E9FFF;
+    border-color: #1E9FFF;
+}
+
+.page-bar i {
+    font-style: normal;
+    color: #888;
+    margin: 0px 4px;
+    font-size: 12px;
+}
+
+
+/*登录页样式*/
+.login-bg {
+    /*background: #eeeeee url() 0 0 no-repeat;*/
+    /*background: url(../images/bg.png) no-repeat center;*/
+    background: #1E9FFF;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.login {
+    margin: 120px auto 0 auto;
+    min-height: 420px;
+    max-width: 420px;
+    padding: 40px;
+    background-color: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 4px;
+    /* overflow-x: hidden; */
+    box-sizing: border-box;
+}
+
+.login a.logo {
+    display: block;
+    height: 58px;
+    width: 167px;
+    margin: 0 auto 30px auto;
+    background-size: 167px 42px;
+}
+
+.login .message {
+    margin: 10px 0 0 -58px;
+    padding: 18px 10px 18px 60px;
+    background: #408EFF;
+    position: relative;
+    color: #fff;
+    font-size: 16px;
+}
+
+.login #darkbannerwrap {
+    background: url(../images/aiwrap.png);
+    width: 18px;
+    height: 10px;
+    margin: 0 0 20px -58px;
+    position: relative;
+}
+
+.login input[type=text],
+.login input[type=file],
+.login input[type=password],
+.login input[type=email], select {
+    border: 1px solid #DCDEE0;
+    vertical-align: middle;
+    border-radius: 3px;
+    height: 50px;
+    padding: 0px 16px;
+    font-size: 14px;
+    color: #555555;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.login input[type=text]:focus,
+.login input[type=file]:focus,
+.login input[type=password]:focus,
+.login input[type=email]:focus, select:focus {
+    border: 1px solid #27A9E3;
+}
+
+.login input[type=submit],
+.login input[type=button] {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 12px 24px;
+    margin: 0px;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #408EFF;
+    border-radius: 3px;
+    border: none;
+    -webkit-appearance: none;
+    outline: none;
+    width: 100%;
+}
+
+.login hr {
+    /*background: #fff url() 0 0 no-repeat;*/
+}
+
+.login hr.hr15 {
+    height: 15px;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+.login hr.hr20 {
+    height: 20px;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+/*详情页样式*/
+.dataitem {
+    padding: 5px 0px;
+    font-size: 12.5px;
+}
+
+.dataitem label {
+    margin: 0 6px 0 12px;
+    display: inline-block;
+    color: #666;
+}
+
+.dataitem span {
+    display: inline-block;
+}
+
+.dataline {
+    height: 1px;
+    background: #efefef;
+    margin: 20px auto;
+}
+
+/*预览页样式*/
+.viewleft {
+    width: 29%;
+    line-height: 18px;
+    float: left;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    height: 500px;
+    overflow: hidden;
+}
+
+.viewright {
+    float: right;
+    width: 67%;
+    border: 1px solid #ccc;
+    padding: 10px;
+    min-height: 500px;
+}
+
+.viewleft ul {
+    display: block;
+    overflow: scroll;
+    height: 420px;
+}
+
+.viewleft ul li {
+    margin: 5px 3px;
+    line-height: 18px;
+    cursor: pointer;
+}
+
+.viewleft ul li:hover {
+    background: #1E9FFF;
+    color: #fff;
+}
+
+.viewleft ul .active {
+    background: #1E9FFF;
+    color: #fff;
+}
+
+
+
