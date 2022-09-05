@@ -1,0 +1,111 @@
+{% extends "admin/base.html" %}
+{% block body %}
+    <style>
+        .sss {
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 50px;
+        }
+    </style>
+    <script type="text/javascript" src="/static/js/echarts.5.12.js"></script>
+    <div id="app" v-loading="loading">
+     <br><br>
+        <div>
+
+
+        </div>
+
+        <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+        <div ref="main" style="width: 100%;height:560px;"></div>
+
+    </div>
+
+
+    </div>
+
+    <script>
+
+
+        App.data = function data() {
+            return {
+                normal: 2,
+                abnormal: 1
+
+
+            }
+        }
+        //初始化
+        App.mounted = function init() {
+
+            let myChart = echarts.init(this.$refs.main);
+            let option;
+
+            option = {
+                title: {
+                text: '深圳市各区房源数量统计',
+                left:'center',
+                textStyle:{
+
+color:'#2574ba', //颜色
+
+fontStyle:'normal', //风格
+
+fontWeight:'normal', //粗细
+
+fontFamily:'Microsoft yahei', //字体
+
+fontSize:14, //大小
+
+align:'center' //水平对齐
+
+}
+
+            },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    top: '5%',
+                    left: 'center'
+                },
+                color:['#c99f1c','#f1ab55','#e2e74b','#FE8463',
+                    '#87a41e','#63fe7d','#1ea476','#63aefe','#1ea476',
+                    '#9163fe'],
+                series: [
+                    {
+                        name: '房源数量',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+
+                        labelLine: {
+                            show: false
+                        },
+                        data: {{datas|safe}},
+                            itemStyle:{
+								        normal:{
+								           label:{
+								              show: true,
+								              formatter: '{b} : {c} ({d}%)'
+								              },
+								              labelLine :{show:true}
+								              }
+								         }
+                    	            }
+
+
+                ]
+            };
+            myChart.setOption(option);
+        }
+
+        //方法
+        App.methods = {}
+
+
+    </script>
+{% endblock %}

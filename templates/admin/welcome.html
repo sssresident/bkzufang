@@ -1,0 +1,97 @@
+{% extends "admin/base.html" %}
+{% block body %}
+
+    <div class="layui-fluid" id="app">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-body ">
+                        <blockquote class="layui-elem-quote">欢迎 {{ request.session.userinfo.name }}：
+                            <span class="x-red">{{ request.session.userinfo.username }}</span>！
+
+                            登录时间:<span v-html='times'></span>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">数据统计</div>
+                    <div class="layui-card-body ">
+                        <ul class="layui-row layui-col-space10 layui-this x-admin-carousel x-admin-backlog">
+                            {% for foo in datas %}
+                                <li class="layui-col-md3 layui-col-xs3">
+
+                                    <a  class="x-admin-backlog-body">
+                                        <h3>{{ foo.name }}</h3>
+                                        <p>
+                                            <cite>{{ foo.num }}</cite></p>
+                                    </a>
+                                </li>
+
+                            {% endfor %}
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <style id="welcome_style"></style>
+
+        </div>
+    </div>
+    </div>
+
+    <script>
+
+        App.data = function data() {
+            return {
+                times: ""
+            }
+        }
+        //初始化
+        App.mounted = function init() {
+            this.getDate()
+        }
+
+
+        //方法
+        App.methods = {
+
+            //显示时间
+            getDate() {
+                //获取当前时间
+                var date = new Date();
+
+                let ret;
+                var fmt = "YYYY-mm-dd HH:MM:SS";
+                const opt = {
+                    "Y+": date.getFullYear().toString(),        // 年
+                    "m+": (date.getMonth() + 1).toString(),     // 月
+                    "d+": date.getDate().toString(),            // 日
+                    "H+": date.getHours().toString(),           // 时
+                    "M+": date.getMinutes().toString(),         // 分
+                    "S+": date.getSeconds().toString()          // 秒
+                    // 有其他格式化字符需求可以继续添加，必须转化成字符串
+                };
+                for (let k in opt) {
+                    ret = new RegExp("(" + k + ")").exec(fmt);
+                    if (ret) {
+                        fmt = fmt.replace(ret[1], (ret[1].length == 1) ? (opt[k]) : (opt[k].padStart(ret[1].length, "0")))
+                    }
+                    ;
+                }
+                ;
+
+                this.times = fmt;
+            }
+
+
+        }
+
+
+    </script>
+
+
+
+{% endblock %}

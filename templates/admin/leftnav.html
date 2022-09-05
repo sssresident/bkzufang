@@ -1,0 +1,87 @@
+<div class="left-nav" style="background: #f0f7fd">
+    <div id="side-nav">
+        <ul id="nav">
+
+
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont left-nav-li" lay-tips="会员管理">&#xe696;</i>
+                    <cite>数据管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i></a>
+                <!--子菜单 -->
+                <ul class="sub-menu">
+
+
+
+                        <li>
+                            <a onclick="xadmin.add_tab('租房数据','/admin/list_data?page=1')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>租房数据</cite></a>
+                        </li>
+
+
+                </ul>
+            </li>
+
+         <li>
+                    <a href="javascript:;">
+                        <i class="iconfont left-nav-li" lay-tips="数据可视化">&#xe6ab;</i>
+                        <cite>数据可视化</cite>
+                        <i class="iconfont nav_right">&#xe697;</i></a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a onclick="xadmin.add_tab('深圳市各区房源数量统计','/admin/areachart')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>各区房源数量</cite></a>
+                        </li>
+                          <li>
+                            <a onclick="xadmin.add_tab('按户型租房房源分类统计','/admin/housetypechart')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>户型分类统计</cite></a>
+                        </li>
+                         <li>
+                            <a onclick="xadmin.add_tab('各区平均月租金排行榜','/admin/rentechart')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>各区月租排行</cite></a>
+                        </li>
+
+                        <li>
+                            <a onclick="xadmin.add_tab('各区租房面积统计','/admin/mianjichart')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>各区租房面积</cite></a>
+                        </li>
+
+
+
+                    </ul>
+                </li>
+
+
+
+
+                <li>
+                    <a href="javascript:;">
+                        <i class="iconfont left-nav-li" lay-tips="系统管理">&#xe6ae;</i>
+                        <cite>系统管理</cite>
+                        <i class="iconfont nav_right">&#xe697;</i></a>
+                    <ul class="sub-menu">
+                         {% if request.session.userinfo.role == '管理员' %}
+                        <li>
+                            <a onclick="xadmin.add_tab('帐号列表','/admin/admin_list')">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>帐号列表</cite></a>
+                        </li>
+
+                        {% endif %}
+
+
+                    </ul>
+                </li>
+
+
+
+
+
+        </ul>
+    </div>
+</div>

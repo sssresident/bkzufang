@@ -1,0 +1,397 @@
+{% extends "admin/base.html" %}
+
+{% block body %}
+    <style>
+        .x-nav {
+            padding: 0 20px;
+            position: relative;
+            z-index: 99;
+            border-bottom: 1px solid #e5e5e5;
+            line-height: 60px;
+            height: 60px;
+            overflow: hidden;
+            background: #fff;
+        }
+    </style>
+
+    <div id="app">
+{% csrf_token %}
+        <div class="x-nav" style="position: relative">
+
+
+            <div class="toptitle">房源数据</div>
+
+
+<a class="layui-btn layui-btn-small" style="display: block;position: absolute;top:20px;right:20px;"
+               onclick="location.reload()" title="rush">
+                <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+            </a>
+
+        </div>
+        <div class="layui-fluid" style="background-color: #fff;">
+
+
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body" style="padding-top: 0px;">
+
+
+
+                            <!--bar-->
+                            <div class="layui-inline layui-show-xs-block" style="margin: 1px 2px;"
+                            >
+                                 <el-select style="width: 150px;margin-right: 5px;" size="mini" v-model="key1"
+                                           placeholder="行政区">
+                                    <el-option
+                                            v-for="item in area"
+                                            :label="item"
+                                            :value="item">
+                                    </el-option>
+                                </el-select>
+                                 <el-select style="width: 150px;margin-right: 5px;" size="mini" v-model="key2"
+                                           placeholder="户型">
+                                    <el-option
+                                            v-for="item in huxing"
+                                            :label="item"
+                                            :value="item">
+                                    </el-option>
+                                </el-select>
+                                 &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label > 租金 &nbsp;&nbsp;</label>
+                                <el-input v-model="zhu1" style="width: 90px;" size="mini"></el-input>
+                                -
+                                <el-input v-model="zhu2" style="width: 90px;" size="mini"></el-input>
+
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label > 面积 &nbsp;&nbsp;</label>
+                                <el-input v-model="mian1" style="width: 90px;" size="mini"></el-input>
+                                -
+                                <el-input v-model="mian2" style="width: 90px;" size="mini"></el-input>
+
+
+
+
+                            </div>
+
+
+                            <div class="layui-inline layui-show-xs-block sp1">
+                                <el-button type="primary" size="mini" @click="serch" icon="el-icon-search">搜索
+                                </el-button>
+
+
+                            </div>
+
+                               <div class="layui-inline layui-show-xs-block sp1">
+                                    <el-upload
+                                            accept=".xlsx"
+                                            :action="importurl"
+                                            :data="importdata"
+                                            :on-success="handlesuccecc"
+                                            :on-on-error="handleerror"
+                                            :show-file-list="false"
+                                    >
+                                        <el-button type="primary" size="mini" icon="el-icon-upload2">导入
+                                        </el-button>
+
+                                    </el-upload>
+                                </div>
+
+
+
+
+
+
+
+
+
+                        </div>
+
+
+                        <div class="layui-card-body ">
+
+
+                             <el-table
+                                    :data="tableData"
+                                    :row-style="{height:35+'px'}"
+                                    :cell-style="{padding:1+'px'}"
+                                    size="mini"
+                                    border
+                                    height="450"
+
+                            >
+                                <!--table-->
+
+                                  <el-table-column #default="scope" v-for="item in header" :prop="item.key"
+                                                 :label="item.key"
+                                                 align="center"
+                                                 :width="item.width"
+                                                 :sortable="item.sort"
+                                                 :show-overflow-tooltip='true'
+                                >
+
+
+                                </el-table-column>
+
+
+
+                            </el-table>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+<!--分页-->
+                        <div class="page-bar">
+                            <ul>
+                                <li v-if="cur>1"><a @click="cur--,pageClick()">上一页</a></li>
+                                <li v-if="cur==1"><a class="banclick">上一页</a></li>
+                                <li v-for="index in indexs" :class="{ 'active': cur == index}">
+                                    <a @click="btnClick(index)">{[ index ]}</a>
+                                </li>
+                                <li v-if="cur!=all"><a @click="cur++,pageClick()">下一页</a></li>
+                                <li v-if="cur == all"><a class="banclick">下一页</a></li>
+                                <li><a><i>共有:{[ totalPage ]}条记录</i>  共 <i>{[ all ]}</i>页</a></li>
+                            </ul>
+                        </div>
+
+    </div>
+
+
+    <!--js-->
+    <script>
+        const token = document.getElementsByName('csrfmiddlewaretoken')[0]['value']
+        App.data = function data() {
+            return {
+                role: "{{ request.session.userinfo.role|safe }}",
+                 importurl:"/admin/importdata",
+                importdata: {'tablename':"",'csrfmiddlewaretoken': token},
+                tablename:"data",
+
+
+                flag: 0,
+
+                 all: {{pages}}, //总页数
+                cur: {{cur}},//当前页码
+                totalPage: {{total}},//当前条数
+
+                header: {{ header|safe}},
+                   key1: "",
+                key2: "",
+                zhu1:"",
+                zhu2:"",
+                mian1:"",
+                mian2:"",
+
+                   area: {{ area|safe }},
+                huxing: {{huxing|safe }},
+
+
+
+                tableData: {{ tb|safe }},
+
+            }
+        }
+        App.mounted = function init() {
+
+            this.header[0]['width']=145;
+
+        }
+
+        //方法
+        App.methods = {
+
+               //删除
+            handleDelete(index, id) {
+                var that = this
+
+                if (this.role == 'user') {
+                    this.$message({
+                        type: 'warning',
+                        message: 'No permission!'
+                    });
+                } else {
+                    this.$confirm('Are you sure to delete?', 'warning', {
+                        confirmButtonText: 'confirm',
+                        cancelButtonText: 'cancel',
+                        type: 'warning'
+                    }).then(() => {
+
+                        var that = this
+                        let params = {
+                            tablename: that.tablename,
+                            id: id,
+                            'csrfmiddlewaretoken': token
+
+                        }
+
+                        axios({
+                            url: '/admin/del_one',
+                            method: 'post',
+                            data: new URLSearchParams(params)
+                        })
+                            .then(function (obj) {
+
+                                that.tableData.splice(index, 1);
+
+
+                            })
+
+                        this.$message({
+                            type: 'success',
+                            message: 'Data deleted!'
+                        });
+
+                    })
+                }
+
+            },
+
+
+             //过滤
+            serch() {
+                var that = this
+                let params = {
+                    key1: this.key1,
+                    key2: this.key2,
+                    zhu1:this.zhu1,
+                    zhu2:this.zhu2,
+                    mian1:this.mian1,
+                    mian2:this.mian2,
+                    page:1,
+
+                     tablename: that.tablename,
+                    csrfmiddlewaretoken: token
+                }
+
+                axios({
+                    url: '/admin/list_datajson',
+                    method: 'post',
+                    data: new URLSearchParams(params)
+                })
+                    .then(function (obj) {
+                        if (obj.data.code == 1) {
+
+                            that.tableData = obj.data['tb'];
+                               that.all = obj.data['pages'], //总页数
+                            that.cur = obj.data['cur'],//当前页码
+                            that.totalPage = obj.data['total']//当前条数
+
+                        }
+
+
+                    })
+
+
+            },
+
+//因为action参数是必填项，我们使用二次确认进行文件上传时，直接填上传文件的url会因为没有参数导致api报404，
+            // 所以这里将action设置为一个返回为空的方法就行，避免抛错
+            handlesuccecc() {
+
+                  this.$message({
+                                type: 'success',
+                                message: '导入成功!'
+                            });
+
+            },
+            handleerror() {
+
+                    this.$message({
+                                type: 'error',
+                                message: '导入失败!'
+                            });
+            },
+
+            //分页
+               //请求数据
+            dataListFn(index) {
+                var that = this
+                let params = {
+                    key1: this.key1,
+                    key2: this.key2,
+                     zhu1:this.zhu1,
+                    zhu2:this.zhu2,
+                    mian1:this.mian1,
+                    mian2:this.mian2,
+
+                     tablename: that.tablename,
+                    page: index,
+                    'csrfmiddlewaretoken': token
+
+                }
+
+                axios({
+                    url: '/admin/list_datajson',
+                    method: 'post',
+                    data: new URLSearchParams(params)
+                })
+                    .then(function (obj) {
+                        //console.log(obj)
+
+                        that.tableData = obj.data['tb']
+                        that.all = obj.data['pages'], //总页数
+                            that.cur = obj.data['cur'],//当前页码
+                            that.totalPage = obj.data['total']//当前条数
+
+
+                    })
+            },
+
+            btnClick(data) {//页码点击事件
+                if (data != this.cur) {
+                    this.cur = data
+                }
+
+//根据点击页数请求数据
+                this.dataListFn(this.cur.toString());
+            },
+            pageClick() {
+                //根据点击页数请求数据
+                this.dataListFn(this.cur.toString());
+            }
+
+        }
+
+
+    </script>
+
+    <!--css-->
+     <style>
+        .x-nav {
+            padding: 0 20px;
+            position: relative;
+            z-index: 99;
+            border-bottom: 1px solid #e5e5e5;
+            line-height: 60px;
+            height: 60px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .inp {
+            padding: 0px;
+            line-height: 20px;
+            width: auto;
+            height: 20px;
+        }
+
+        .items .el-input__inner {
+            font-size: 12px;
+            color: #888888;
+            border: none;
+            padding: 0px;
+            line-height: 24px;
+            height: 24px;
+            text-align: center;
+        }
+    </style>
+
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "admin/base.html" %}
+{% block body %}
+    <style>
+        .sss {
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 50px;
+        }
+    </style>
+    <script type="text/javascript" src="/static/js/echarts.5.12.js"></script>
+    <div id="app" v-loading="loading">
+        <div style="text-align: center;font-size: 16px;line-height: 30px;margin-top: 15px;font-weight: bold;">最近一年新增数据柱状图</div>
+
+
+        <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+        <div ref="main" style="width: 98%;height:500px;"></div>
+
+    </div>
+
+
+    </div>
+
+    <script>
+
+
+
+
+
+        App.data = function data() {
+            return {
+                xdata:{{ xdata|safe}},
+                ydata: {{ydata|safe}}
+        }
+
+
+
+            }
+
+        //初始化
+        App.mounted = function init() {
+
+            let myChart = echarts.init(this.$refs.main);
+            let option;
+
+            option = {
+                xAxis: {
+                    type: 'category',
+                    data:this.xdata
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: this.ydata,
+                    type: 'bar',
+                    itemStyle: {
+							normal: {
+								label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+										color: '#666666',
+										fontSize: 14
+									}
+								}
+							}
+                    }
+
+                }]
+            };
+            myChart.setOption(option);
+        }
+
+        //方法
+        App.methods = {}
+
+
+    </script>
+{% endblock %}

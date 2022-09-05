@@ -1,0 +1,262 @@
+{% extends "admin/base.html" %}
+{% block body %}
+    <style>
+        .sss {
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 50px;
+        }
+    </style>
+    <script type="text/javascript" src="/static/js/echarts.5.12.js"></script>
+    <div id="app" v-loading="loading">
+     <br><br>
+        <div>
+
+
+        </div>
+
+        <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+        <div ref="main" style="width: 100%;height:560px;"></div>
+
+    </div>
+
+
+    </div>
+
+    <script>
+
+
+        App.data = function data() {
+            return {
+                datas:{{datas|safe}}
+
+
+            }
+        }
+        //初始化
+        App.mounted = function init() {
+
+            let myChart = echarts.init(this.$refs.main);
+            let option;
+
+           var posList = [
+    'left', 'right', 'top', 'bottom',
+    'inside',
+    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+];
+
+app.configParameters = {
+    rotate: {
+        min: 90,
+        max: 90
+    },
+    align: {
+        options: {
+            left: 'left',
+            center: 'center',
+            right: 'right'
+        }
+    },
+    verticalAlign: {
+        options: {
+            top: 'top',
+            middle: 'middle',
+            bottom: 'bottom'
+        }
+    },
+    position: {
+        options: echarts.util.reduce(posList, function (map, pos) {
+            map[pos] = pos;
+            return map;
+        }, {})
+    },
+    distance: {
+        min: 0,
+        max: 100
+    }
+};
+
+app.config = {
+    rotate: -90,
+    align: 'left',
+    verticalAlign: 'middle',
+    position: 'insideBottom',
+    distance: 10,
+    onChange: function () {
+        var labelOption = {
+            normal: {
+                rotate: app.config.rotate,
+                align: app.config.align,
+                verticalAlign: app.config.verticalAlign,
+                position: app.config.position,
+                distance: app.config.distance
+            }
+        };
+        myChart.setOption({
+            series: [{
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }]
+        });
+    }
+};
+
+
+var labelOption = {
+    show: true,
+    position: app.config.position,
+    distance: app.config.distance,
+    align: app.config.align,
+    verticalAlign: app.config.verticalAlign,
+    rotate: app.config.rotate,
+    formatter: '{name|{a}} {c}',
+    fontSize: 9,
+    rich: {
+        name: {
+            textBorderColor: '#fff'
+        }
+    }
+};
+
+option = {
+    title: {
+                text: '深圳市各区租房面积分布',
+                left:'center',
+                textStyle:{
+
+color:'#2574ba', //颜色
+
+fontStyle:'normal', //风格
+
+fontWeight:'normal', //粗细
+
+fontFamily:'Microsoft yahei', //字体
+
+fontSize:14, //大小
+
+align:'center' //水平对齐
+
+}
+
+            },
+    color: ['#79d0e5', '#006699', '#4cce96', '#32e583',
+        '#c5e579', '#8a9900', '#ce894c', '#e59d32',
+    '#e59f79', '#993000'],
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: ['Forest', 'Steppe', 'Desert', 'Wetland']
+    },
+    toolbox: {
+        show: true,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
+        feature: {
+            mark: {show: true},
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    xAxis: [
+        {
+            type: 'category',
+            axisTick: {show: false},
+            data: ['0~50m²', '50-100m²', '100~150m²', '150m²以上']
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value'
+        }
+    ],
+    series: [
+        {
+            name: '罗湖区',
+            type: 'bar',
+            barGap: 0.05,
+            label: labelOption,
+            data: this.datas[0]
+        },
+        {
+            name: '福田区',
+            type: 'bar',
+            label: labelOption,
+            data: this.datas[7]
+        },
+        {
+            name: '南山区',
+            type: 'bar',
+            label: labelOption,
+            data: this.datas[2]
+        },
+        {
+            name: '盐田区',
+            type: 'bar',
+            label: labelOption,
+            data: this.datas[6]
+        }
+        ,
+        {
+            name: '宝安区',
+            type: 'bar',
+            label: labelOption,
+            data: this.datas[5]
+        }
+        ,
+        {
+            name: '龙岗区',
+            type: 'bar',
+            label: labelOption,
+            data: this.datas[9]
+        }
+        ,
+        {
+            name: '龙华区',
+            type: 'bar',
+            label: labelOption,
+            data: this.datas[8]
+        }
+        ,
+        {
+            name: '光明区',
+            type: 'bar',
+            label: labelOption,
+            data: this.datas[1]
+        },
+        {
+            name: '坪山区',
+            type: 'bar',
+            label: labelOption,
+            data: this.datas[3]
+        }
+        ,
+        {
+            name: '大鹏新区',
+            type: 'bar',
+            label: labelOption,
+            data: this.datas[4]
+        }
+    ]
+};
+            myChart.setOption(option);
+        }
+
+        //方法
+        App.methods = {}
+
+
+    </script>
+{% endblock %}

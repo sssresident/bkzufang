@@ -1,0 +1,93 @@
+{% extends "admin/base.html" %}
+{% block body %}
+    <style>
+        .sss {
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 50px;
+        }
+    </style>
+    <script type="text/javascript" src="/static/js/echarts.5.12.js"></script>
+    <div id="app" v-loading="loading">
+
+        <div>
+
+
+        </div>
+
+        <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+        <div ref="main" style="width: 100%;height:560px;"></div>
+
+    </div>
+
+
+    </div>
+
+    <script>
+
+
+        App.data = function data() {
+            return {
+                normal: {{ normal|safe }},
+                abnormal: {{abnormal|safe}}
+
+
+            }
+        }
+        //初始化
+        App.mounted = function init() {
+
+            let myChart = echarts.init(this.$refs.main);
+            let option;
+
+            option = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    top: '5%',
+                    left: 'center'
+                },
+                color:['#1ea476','#FE8463'],
+                series: [
+                    {
+                        name: '正常/异常申请单比例',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+
+                        labelLine: {
+                            show: false
+                        },
+                        data: [
+                            {value: this.normal, name: '正常申请单'},
+                            {value: this.abnormal, name: '异常申请单'},
+
+                        ],
+                            itemStyle:{
+								        normal:{
+								           label:{
+								              show: true,
+								              formatter: '{b} : {c} ({d}%)'
+								              },
+								              labelLine :{show:true}
+								              }
+								         }
+                    	            }
+
+
+                ]
+            };
+            myChart.setOption(option);
+        }
+
+        //方法
+        App.methods = {}
+
+
+    </script>
+{% endblock %}
